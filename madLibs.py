@@ -5,28 +5,31 @@
 import re
 
 # Define words to replace.
-grammarRegex = [re.compile('ADJECTIVE'), re.compile('NOUN'), re.compile('ADVERB'), re.compile('VERB')]
+grammarRegex = re.compile(r'ADJECTIVE|NOUN|ADVERB|VERB')
 
 # Create duplicate file of original.
 sampleFile = open('sample.txt')
+sampleContent = sampleFile.read()
 newFile = open('sample1.txt', 'w')
-newFile.write(sampleFile.read())
+newFile.write(sampleContent)
 newFile.close()
 sampleFile.close()
 
-# Prompt user for substitutes.
+# Prompt user for substitutes after identifying to be replaced words.
 subs = []
-subs.append(input('Enter an adjective: '))
-subs.append(input('Enter a noun: '))
-subs.append(input('Enter an adverb: '))
-subs.append(input('Enter a verb: '))
+for capWord in grammarRegex.findall(sampleContent):
+    if capWord.startswith('A'):
+        subs.append(input('Enter an ' + capWord.lower() + ': '))
+    elif capWord.startswith('V'):
+        subs.append(input('Enter a verb in past tense: '))
+    else:
+        subs.append(input('Enter a ' + capWord.lower() + ': '))
 
 # Open duplicate file and replace words one-by-one.
-for i in range(len(grammarRegex)):
+for i in range(len(subs)):
     newFile = open('sample1.txt', 'r')
     newFileContent = newFile.read()
     newFile.close()
     newFile = open('sample1.txt', 'w')
-    # print(grammarRegex[i].sub(subs[i],newFileContent)) # Test line: uncomment if needed.
-    newFile.write(grammarRegex[i].sub(subs[i],newFileContent))
+    newFile.write(grammarRegex.sub(subs[i], newFileContent, 1))
     newFile.close()
