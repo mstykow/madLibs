@@ -27,9 +27,13 @@ for capWord in grammarRegex.findall(sampleContent):
 
 # Open duplicate file and replace words one-by-one.
 for i in range(len(subs)):
-    newFile = open('sample1.txt', 'r')
+    newFile = open('sample1.txt')
     newFileContent = newFile.read()
     newFile.close()
     newFile = open('sample1.txt', 'w')
     newFile.write(grammarRegex.sub(subs[i], newFileContent, 1))
     newFile.close()
+
+newFile = open('sample1.txt')
+newFileContent = newFile.read()
+print(newFileContent)
