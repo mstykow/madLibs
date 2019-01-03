@@ -36,4 +36,5 @@ for i in range(len(subs)):
 
 newFile = open('sample1.txt')
 newFileContent = newFile.read()
+newFile.close()
 print(newFileContent)
